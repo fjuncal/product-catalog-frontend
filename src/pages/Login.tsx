@@ -32,12 +32,8 @@ export default function Login() {
 			const response = (await api.login(formData)) as LoginResponse;
 			auth.login(response.token);
 			navigate("/products");
-		} catch (err: unknown) {
-			if (err instanceof Error) {
-				setError(err.message || "Login failed");
-			} else {
-				setError("An unknown error occurred");
-			}
+		} catch {
+			setError("Wrong username or password");
 		}
 	}
 
