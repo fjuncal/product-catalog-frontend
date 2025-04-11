@@ -1,4 +1,3 @@
-const mockUsers = [{ id: 1, username: "user", token: "fake-jwt-token" }];
 
 const mockProducts = [
 	{
@@ -81,7 +80,20 @@ const mockCategories = [
 	{ id: 5, name: "Sports & Outdoors" },
 ];
 
-
+interface User {
+	id: number;
+	username: string;
+	token: string;
+	password: string;
+  }
+  
+  let mockUsers: User[] = JSON.parse(localStorage.getItem("mockUsers") || "[]");
+  
+  if (mockUsers.length === 0) {
+	mockUsers = [{ id: 1, username: "user", token: "fake-jwt-token",password: "password" }];
+	localStorage.setItem("mockUsers", JSON.stringify(mockUsers));
+  }
+  
 
 interface LoginPayload {
 	username: string;
@@ -95,10 +107,8 @@ interface RegisterPayload {
 export const api = {
 	login: ({ username, password }: LoginPayload) => {
 		return new Promise((resolve, reject) => {
-			const user = mockUsers.find((u) => u.username === username);
-			console.log(mockUsers);
-			
-			if (user && password === "password") {
+			const user = mockUsers.find((u) => u.username === username);			
+			if (user && user.password === password) {
 			  resolve({ token: user.token, username: user.username });
 			} else {
 			  reject({ message: "Invalid credentials" });
@@ -109,19 +119,18 @@ export const api = {
 		return new Promise((resolve, reject) => {
 			const exists = mockUsers.find((u) => u.username === userData.username);
 			if (exists) {
-				reject({ message: "User already exists" });
+			  reject({ message: "User already exists" });
 			} else {
-				const newUser = {
-					...userData,
-					id: mockUsers.length + 1,
-					token: "fake-jwt-token",
-				};
-				mockUsers.push(newUser);
-				resolve(newUser);
-				console.log(mockUsers);
-				
+			  const newUser = {
+				...userData,
+				id: mockUsers.length + 1,
+				token: "fake-jwt-token",
+			  };
+			  mockUsers.push(newUser);
+			  localStorage.setItem("mockUsers", JSON.stringify(mockUsers));
+			  resolve(newUser);
 			}
-		});
+		  });
 	},
 	fetchProducts: () => {
 		return new Promise((resolve) => {

@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { api } from "../services/api";
+import useAuth from "../hooks/useAuth";
 
-// Interfaces for login data and response
 interface LoginFormData {
 	username: string;
 	password: string;
@@ -15,21 +15,22 @@ interface LoginResponse {
 
 export default function Login() {
 	const navigate = useNavigate();
+	const auth = useAuth();
 	const [formData, setFormData] = useState<LoginFormData>({
 		username: "",
 		password: "",
 	});
 	const [error, setError] = useState<string>("");
 
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+	function handleChange(e: ChangeEvent<HTMLInputElement>) {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
+	}
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		try {
 			const response = (await api.login(formData)) as LoginResponse;
-			localStorage.setItem("token", response.token);
+			auth.login(response.token);
 			navigate("/products");
 		} catch (err: unknown) {
 			if (err instanceof Error) {
@@ -38,7 +39,7 @@ export default function Login() {
 				setError("An unknown error occurred");
 			}
 		}
-	};
+	}
 
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-100">

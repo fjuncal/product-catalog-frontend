@@ -3,9 +3,16 @@ import { Link, useNavigate } from "react-router";
 export default function Header() {
 	const navigate = useNavigate();
 	const token = localStorage.getItem("token");
+	const mockUsers = localStorage.getItem("mockUsers");
 
 	function handleLogout() {
 		localStorage.removeItem("token");
+		navigate("/login");
+	}
+
+	function clearMockData() {
+		localStorage.removeItem("mockUsers");
+		alert("Mock data cleared. Please refresh the page.");
 		navigate("/login");
 	}
 
@@ -29,13 +36,23 @@ export default function Header() {
 					</nav>
 				</div>
 				<div className="flex items-center gap-4">
-					{token ? (
+					{mockUsers && (
 						<button
-							onClick={handleLogout}
-							className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded"
+							onClick={clearMockData}
+							className="bg-gray-700 hover:bg-gray-800 px-3 py-1 rounded text-sm"
 						>
-							Logout
+							Clear Mock Data
 						</button>
+					)}
+					{token ? (
+						<>
+							<button
+								onClick={handleLogout}
+								className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded"
+							>
+								Logout
+							</button>
+						</>
 					) : (
 						<Link to="/login" className="hover:underline">
 							Login
@@ -45,11 +62,8 @@ export default function Header() {
 			</div>
 			{!token && (
 				<div className="bg-blue-500 text-sm text-center py-1">
-					Test credentials:
-					<p>
-						username: <span className="font-bold">user</span>
-					</p>
-					password:<span className="font-bold"> password</span>
+					Test credentials: <span className="font-bold">username:</span> user,{" "}
+					<span className="font-bold">password:</span> password
 				</div>
 			)}
 		</header>
