@@ -81,8 +81,19 @@ const mockCategories = [
 	{ id: 5, name: "Sports & Outdoors" },
 ];
 
+
+
+interface LoginPayload {
+	username: string;
+	password: string;
+}
+
+interface RegisterPayload {
+	username: string;
+	password: string;
+}
 export const api = {
-	login: ({ username, password }) => {
+	login: ({ username, password }: LoginPayload) => {
 		return new Promise((resolve, reject) => {
 			const user = mockUsers.find((u) => u.username === username);
 			if (user && password === "password") {
@@ -92,7 +103,7 @@ export const api = {
 			}
 		});
 	},
-	register: (userData) => {
+	register: (userData: RegisterPayload) => {
 		return new Promise((resolve, reject) => {
 			const exists = mockUsers.find((u) => u.username === userData.username);
 			if (exists) {
