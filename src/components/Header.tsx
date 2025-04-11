@@ -62,8 +62,12 @@ export default function Header() {
 			</div>
 			{!token && (
 				<div className="bg-blue-500 text-sm text-center py-1">
-					Test credentials: <span className="font-bold">username:</span> user,{" "}
-					<span className="font-bold">password:</span> password
+					<p>
+						username: <span className="font-bold">user</span>
+					</p>
+					<p>
+						password:<span className="font-bold"> password</span>
+					</p>
 				</div>
 			)}
 		</header>
