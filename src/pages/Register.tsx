@@ -1,44 +1,38 @@
+// src/pages/Register.tsx
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { api } from "../services/api";
 
-// Interfaces for login data and response
-interface LoginFormData {
+interface RegisterFormData {
 	username: string;
 	password: string;
 }
 
-interface LoginResponse {
-	token: string;
-	username: string;
-}
-
-export default function Login() {
+export default function Register() {
 	const navigate = useNavigate();
-	const [formData, setFormData] = useState<LoginFormData>({
+	const [formData, setFormData] = useState<RegisterFormData>({
 		username: "",
 		password: "",
 	});
 	const [error, setError] = useState<string>("");
 
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+	function handleChange(e: ChangeEvent<HTMLInputElement>) {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
+	}
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		try {
-			const response = (await api.login(formData)) as LoginResponse;
-			localStorage.setItem("token", response.token);
-			navigate("/products");
+			await api.register(formData);
+			navigate("/login");
 		} catch (err: unknown) {
 			if (err instanceof Error) {
-				setError(err.message || "Login failed");
+				setError(err.message || "Registration failed");
 			} else {
 				setError("An unknown error occurred");
 			}
 		}
-	};
+	}
 
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -46,7 +40,7 @@ export default function Login() {
 				onSubmit={handleSubmit}
 				className="bg-white p-6 rounded shadow-md w-80"
 			>
-				<h2 className="text-2xl font-bold mb-4">Login</h2>
+				<h2 className="text-2xl font-bold mb-4">Register</h2>
 				{error && <div className="text-red-500 mb-2">{error}</div>}
 				<div className="mb-4">
 					<label className="block mb-1" htmlFor="username">
@@ -78,16 +72,10 @@ export default function Login() {
 				</div>
 				<button
 					type="submit"
-					className="w-full bg-blue-500 text-white p-2 rounded"
+					className="w-full bg-green-500 text-white p-2 rounded"
 				>
-					Login
+					Register
 				</button>
-				<p className="mt-2 text-center">
-					Don't have an account?{" "}
-					<Link to="/register" className="text-blue-500 underline">
-						Register here
-					</Link>
-				</p>
 			</form>
 		</div>
 	);

@@ -96,10 +96,12 @@ export const api = {
 	login: ({ username, password }: LoginPayload) => {
 		return new Promise((resolve, reject) => {
 			const user = mockUsers.find((u) => u.username === username);
+			console.log(mockUsers);
+			
 			if (user && password === "password") {
-				resolve({ token: user.token, username: user.username });
+			  resolve({ token: user.token, username: user.username });
 			} else {
-				reject({ message: "Invalid credentials" });
+			  reject({ message: "Invalid credentials" });
 			}
 		});
 	},
@@ -116,6 +118,8 @@ export const api = {
 				};
 				mockUsers.push(newUser);
 				resolve(newUser);
+				console.log(mockUsers);
+				
 			}
 		});
 	},
