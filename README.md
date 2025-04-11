@@ -1,3 +1,7 @@
+# Deployment
+
+Available: <https://product-catalog-frontend-cyan.vercel.app/>
+
 # Product Catalog Application
 
 This project is a full-stack application that demonstrates a simple e-commerce product catalog. The backend is built using Java 17 and Spring Boot, while the frontend is developed using React with TypeScript and Tailwind CSS. The application includes authentication (with JWT), data validation, error handling, and interactive API documentation via Swagger.
