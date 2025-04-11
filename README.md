@@ -8,7 +8,7 @@ The Product Catalog Application is designed as an assessment project to showcase
 
 ## Features
 
-- **Backend API (Java & Spring Boot)**
+- **Backend API (Java & Spring Boot)** <https://github.com/fjuncal/product-catalog>
 
   - RESTful endpoints for products, categories, and authentication.
   - Data validation and global error handling.
