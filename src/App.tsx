@@ -3,6 +3,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Header from "./components/Header";
 import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ProductsPage from "./pages/ProductsPage";
+import CategoriesPage from "./pages/CategoriesPage";
 
 function App() {
 	return (
@@ -13,22 +16,22 @@ function App() {
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
-					{/* <Route
+					<Route
 						path="/products"
 						element={
 							<ProtectedRoute>
 								<ProductsPage />
 							</ProtectedRoute>
 						}
-					/> */}
-					{/* <Route
+					/>
+					<Route
 						path="/categories"
 						element={
 							<ProtectedRoute>
 								<CategoriesPage />
 							</ProtectedRoute>
 						}
-					/> */}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</>
